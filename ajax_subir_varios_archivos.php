@@ -9,16 +9,16 @@
 	<script>
 		function enviarArchivo(){
 			//recuperar archivo formulario
-			var archivos = document.querySelector('#fichero').files
+			var archivos = document.querySelector('#fichero').files;
 
 			//validar que hemos seleccionado un archivo
 			if(archivos.length == 0){
-				alert('no se ha seleccionado ningun archivo');
+				alert('Antes de subir, no se ha seleccionado ningun archivo');
 				return;
 			}
 
 			//recorrer el array de objetos para validar el tamaño de cada archivo seleccionado y confeccionar el objeto formData
-			var errores = 'los siguientes archivos superan los 900Kb:\n\n';
+			var errores = 'Antes de subir, los siguientes archivos superan los 900Kb:\n\n';
 			var hayError = false;
 			var datos = new FormData();
 
@@ -36,29 +36,27 @@
 					//encapsular archivo
 					var indice = 'archivo'+clave;
 					datos.append(indice, archivo);
-					
-					//CON AJAX
-					$.ajax({
-						url: 'servicio/ajax_recibir_varios_archivos.php',
-						type: 'post',
-						data: datos,
-						cache: false,
-						contentType: false,
-						processData: false,
-
-						success: function(mensaje){
-							alert(mensaje)
-						},
-						error: function(error){
-							alert(error)
-						}
-					})
 
 			})
 			//no aparece porque es el SERVIDOR el que valida
 			if(hayError){
 				alert(errores);
 			}
+			//CON AJAX
+			$.ajax({
+				url: 'servicio/ajax_recibir_varios_archivos.php',
+				type: 'post',
+				data: datos,
+				cache: false,
+				contentType: false,
+				processData: false,
+				success: function(mensaje){
+					alert(mensaje)
+				},
+				error: function(error){
+					alert(error)
+				}
+			})
 			
 		}
 	</script>
