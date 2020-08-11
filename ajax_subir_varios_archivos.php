@@ -24,6 +24,7 @@
 
 			Array.prototype.forEach.call(archivos, function(archivo, clave){
 				//validar tamaño de cada archivo
+				/*PROVAR VALIDACION POR EL SERVIDOR
 				if(archivo.size > 900000){
 					errores += archivo.name + "\n";
 					hayError = true;
@@ -31,9 +32,30 @@
 					//encapsular archivo
 					var indice = 'archivo'+clave;
 					datos.append(indice, archivo);
-				}
+				}*/
+					//encapsular archivo
+					var indice = 'archivo'+clave;
+					datos.append(indice, archivo);
+					
+					//CON AJAX
+					$.ajax({
+						url: 'servicio/ajax_recibir_varios_archivos.php',
+						type: 'post',
+						data: datos,
+						cache: false,
+						contentType: false,
+						processData: false,
+
+						success: function(mensaje){
+							alert(mensaje)
+						},
+						error: function(error){
+							alert(error)
+						}
+					})
 
 			})
+			//no aparece porque es el SERVIDOR el que valida
 			if(hayError){
 				alert(errores);
 			}
